@@ -7,9 +7,9 @@ type User struct {
 	RoleID    int    `json:"-"`
 	Role      Role   `json:"role"`
 	Name      string `json:"name"`
-	Username  string `gorm:"uniqueIndex:idx_username" json:"username"`
+	Username  string `gorm:"type:varchar(255);uniqueIndex:idx_username" json:"username"`
 	Password  string `json:",omitempty"`
-	Phone     string `gorm:"uniqueIndex:idx_phone" json:"phone"`
+	Phone     string `gorm:"type:varchar(255);uniqueIndex:idx_phone" json:"phone"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
