@@ -1,14 +1,28 @@
 package main
 
 import (
+	"flag"
 	"lelang-online-api/config"
 	"lelang-online-api/database"
 	"lelang-online-api/database/migrations"
+	"lelang-online-api/database/seeders"
 	"lelang-online-api/routes"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
+
+func Flag(db *gorm.DB) {
+	var seed = flag.Bool("seed", false, "run seeder")
+	flag.Parse()
+
+	if *seed {
+		seeders.RunSeeder(db)
+		os.Exit(0)
+	}
+}
 
 func main() {
 	if err := config.InitEnv(); err != nil {
@@ -25,8 +39,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	Flag(db)
+
 	router := gin.Default()
 
-	routes.SetupRoutes(router)
+	routes.SetupRoutes(db, router)
 	router.Run(":8080")
 }
