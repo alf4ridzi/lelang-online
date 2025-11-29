@@ -1,3 +1,7 @@
 package config
 
-var ModelMigration = []any{}
+import "lelang-online-api/models"
+
+var ModelMigration = []any{
+	models.Role{},
+}
