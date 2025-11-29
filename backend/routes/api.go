@@ -19,7 +19,7 @@ func SetupRoutes(db *gorm.DB, r *gin.Engine) {
 func authRoute(db *gorm.DB, route *gin.RouterGroup) {
 	userRepo := repositories.NewUserRepo(db)
 	userService := services.NewUserService(userRepo)
-	userController := controllers.NewAuthController(&userService)
+	userController := controllers.NewAuthController(userService)
 
 	{
 		authGroup := route.Group("auth")
