@@ -12,6 +12,8 @@ import (
 
 type UserService interface {
 	Login(context.Context, models.Login) (*models.User, error)
+	Register(context.Context, models.User) error
+	Profile(context.Context, any) (*models.User, error)
 }
 
 type UserServiceImpl struct {
@@ -38,4 +40,19 @@ func (s *UserServiceImpl) Login(ctx context.Context, login models.Login) (*model
 	}
 
 	return user, nil
+}
+
+func (s *UserServiceImpl) Register(ctx context.Context, user models.User) error {
+	hashed, err := utils.GenerateHashBcrypt(user.Password)
+	if err != nil {
+		return err
+	}
+
+	user.Password = hashed
+
+	return s.repo.Create(ctx, user)
+}
+
+func (s *UserServiceImpl) Profile(ctx context.Context, id any) (*models.User, error) {
+	return s.repo.FindByID(ctx, id)
 }

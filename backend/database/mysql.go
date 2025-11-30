@@ -30,6 +30,6 @@ func InitDatabase() (*gorm.DB, error) {
 		dbName,
 	)
 
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{TranslateError: true})
 	return db, err
 }
