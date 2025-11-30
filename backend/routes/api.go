@@ -43,6 +43,7 @@ func authRoute(db *gorm.DB, route *gin.RouterGroup) {
 		authGroup := route.Group("auth")
 		authGroup.POST("/login", userController.Login)
 		authGroup.POST("/register", userController.Register)
+		authGroup.DELETE("/logout", userController.Logout)
 	}
 
 }

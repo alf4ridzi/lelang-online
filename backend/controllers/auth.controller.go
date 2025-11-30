@@ -87,3 +87,11 @@ func (c *AuthController) Register(ctx *gin.Context) {
 
 	helpers.ResponseJson(ctx, http.StatusOK, true, "berhasil register", nil)
 }
+
+func (c *AuthController) Logout(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	session.Clear()
+	session.Options(sessions.Options{MaxAge: -1})
+	session.Save()
+	helpers.ResponseJson(ctx, http.StatusOK, true, "berhasil logout", nil)
+}
