@@ -4,6 +4,8 @@
 
 package com.lelang.frontend;
 
+import com.lelang.frontend.httpclient.HttpClient;
+
 /**
  *
  * @author hunter
@@ -11,6 +13,9 @@ package com.lelang.frontend;
 public class Frontend {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        HttpClient client = new HttpClient();
+         
+        LoginForm login = new LoginForm(client);
+        login.setVisible(true);
     }
 }

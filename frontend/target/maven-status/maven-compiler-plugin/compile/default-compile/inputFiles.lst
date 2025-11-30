@@ -1,1 +1,8 @@
+/home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/AuthHandler.java
 /home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/Frontend.java
+/home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/LoginForm.java
+/home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/RegisterForm.java
+/home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/Dashboard.java
+/home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/DashboardForm.java
+/home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/Menu1.java
+/home/hunter/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/httpclient/HttpClient.java
