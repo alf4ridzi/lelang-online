@@ -30,4 +30,9 @@ public class AuthHandler {
         
         return response;
     }
+    
+    public JSONObject logout() {
+        JSONObject response = client.logout();
+        return response;
+    }
 }

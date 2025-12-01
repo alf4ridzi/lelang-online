@@ -4,20 +4,21 @@
  */
 package com.lelang.frontend.dashboard;
 
+import javax.swing.BorderFactory;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
- * @author hunter
+ * @author alfaridzi
  */
-public class Menu1 extends javax.swing.JInternalFrame {
+public class DashboardUser extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Menu1
+     * Creates new form DashboardUser
      */
-    public Menu1() {
+    public DashboardUser() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
     }
@@ -41,17 +42,17 @@ public class Menu1 extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(220, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(383, Short.MAX_VALUE))
+                .addGap(193, 193, 193))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addContainerGap(343, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
         pack();

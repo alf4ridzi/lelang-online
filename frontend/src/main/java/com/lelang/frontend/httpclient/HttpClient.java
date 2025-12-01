@@ -93,7 +93,7 @@ public class HttpClient {
                 String[] parts = cookie.split("=", 2);
                 if (parts.length == 2) {
                     cookies.put(parts[0], parts[1]);
-                    System.out.println("Stored cookie: " + parts[0] + "=" + parts[1]);
+                    //System.out.println("Stored cookie: " + parts[0] + "=" + parts[1]);
                 }
             }
         }
@@ -128,10 +128,6 @@ public class HttpClient {
             String response = executeRequest("/auth/login", "POST", requestBody);
             JSONObject jsonResponse = new JSONObject(response);
 
-            if (jsonResponse.has("status") && jsonResponse.getBoolean("status")) {
-                System.out.println("sukses login");
-            }
-
             return jsonResponse;
 
         } catch (Exception e) {
@@ -144,12 +140,11 @@ public class HttpClient {
 
     public JSONObject logout() {
         try {
-            String response = executeRequest("/auth/logout", "POST", null);
+            String response = executeRequest("/auth/logout", "DELETE", null);
             JSONObject jsonResponse = new JSONObject(response);
 
             if (jsonResponse.has("status") && jsonResponse.getBoolean("status")) {
                 cookies.clear();
-                System.out.println("Logout successful! Session cleared.");
             }
 
             return jsonResponse;

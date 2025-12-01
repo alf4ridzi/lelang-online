@@ -9,6 +9,7 @@ package com.lelang.frontend.dashboard;
  * @author hunter
  */
 
+import com.lelang.frontend.LoginForm;
 import com.lelang.frontend.httpclient.HttpClient;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
@@ -24,9 +25,11 @@ public class Dashboard {
         this.form = new DashboardForm();
 
         loadProfile();
+        form.addLogoutListener(e -> logoout());
         form.setVisible(true);
     }
-
+    
+    
     private void loadProfile() {
         try {
             
@@ -43,6 +46,26 @@ public class Dashboard {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Gagal memuat data profil! " + e.getMessage());
         }
+    }
+    
+    private void logoout() {
+        int a = JOptionPane.showConfirmDialog(form, "yakin logout?", "logout", JOptionPane.YES_NO_OPTION);
+        if (a != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        JSONObject logout = client.logout();
+        
+        if (logout.has("status") && logout.getBoolean("status")) {
+            JOptionPane.showMessageDialog(form, "berhasil logout", "berhasil", JOptionPane.INFORMATION_MESSAGE);
+            LoginForm login = new LoginForm(client);
+            login.setVisible(true);
+            form.dispose();
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(form, logout.getString("message"), "logout gagal", JOptionPane.ERROR_MESSAGE);
+        form.dispose();
     }
 }
 
