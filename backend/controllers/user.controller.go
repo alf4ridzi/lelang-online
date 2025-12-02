@@ -39,3 +39,7 @@ func (c *UserController) Profile(ctx *gin.Context) {
 
 	helpers.ResponseJson(ctx, http.StatusOK, true, "ok", user)
 }
+
+func (c *UserController) GetItems(ctx *gin.Context) {
+
+}

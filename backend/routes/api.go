@@ -16,14 +16,16 @@ func SetupRoutes(db *gorm.DB, r *gin.Engine) {
 
 	{
 		api := r.Group("api")
-		authRoute(db, api)
+		authRoutes(db, api)
 
 		api.Use(middlewares.AuthMiddleware)
-		userRoute(db, api)
+		userRoutes(db, api)
+
+		ItemRoutes(db, api)
 	}
 }
 
-func userRoute(db *gorm.DB, route *gin.RouterGroup) {
+func userRoutes(db *gorm.DB, route *gin.RouterGroup) {
 	userRepo := repositories.NewUserRepo(db)
 	userService := services.NewUserService(userRepo)
 	userController := controllers.NewUserController(userService)
@@ -31,10 +33,11 @@ func userRoute(db *gorm.DB, route *gin.RouterGroup) {
 	{
 		usersGroup := route.Group("users")
 		usersGroup.GET("/profile", userController.Profile)
+		usersGroup.Group("/:id/items", userController.GetItems)
 	}
 }
 
-func authRoute(db *gorm.DB, route *gin.RouterGroup) {
+func authRoutes(db *gorm.DB, route *gin.RouterGroup) {
 	userRepo := repositories.NewUserRepo(db)
 	userService := services.NewUserService(userRepo)
 	userController := controllers.NewAuthController(userService)
@@ -45,5 +48,16 @@ func authRoute(db *gorm.DB, route *gin.RouterGroup) {
 		authGroup.POST("/register", userController.Register)
 		authGroup.DELETE("/logout", userController.Logout)
 	}
+}
 
+func ItemRoutes(db *gorm.DB, route *gin.RouterGroup) {
+	itemRepo := repositories.NewItemRepo(db)
+	itemService := services.NewItemService(itemRepo)
+	itemController := controllers.NewItemController(itemService)
+
+	{
+		itemGroup := route.Group("items")
+		itemGroup.POST("/", itemController.Store)
+		itemGroup.GET("/:id", itemController.GetByID)
+	}
 }
