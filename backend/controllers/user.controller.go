@@ -3,6 +3,7 @@ package controllers
 import (
 	"context"
 	"lelang-online-api/helpers"
+	"lelang-online-api/models"
 	"lelang-online-api/services"
 	"net/http"
 	"time"
@@ -41,5 +42,21 @@ func (c *UserController) Profile(ctx *gin.Context) {
 }
 
 func (c *UserController) GetItems(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	userID := session.Get("user_id")
 
+	reqCtx, cancel := context.WithTimeout(ctx.Request.Context(), 5*time.Second)
+	defer cancel()
+
+	items, err := c.service.GetItems(reqCtx, userID)
+	if err != nil {
+		helpers.ResponseJson(ctx, http.StatusInternalServerError, false, err.Error(), nil)
+		return
+	}
+
+	data := map[string][]models.Item{
+		"items": items,
+	}
+
+	helpers.ResponseJson(ctx, http.StatusOK, true, "berhasil mendapatkan data", data)
 }

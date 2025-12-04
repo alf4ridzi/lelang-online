@@ -27,7 +27,7 @@ func (c *ItemController) GetByID(ctx *gin.Context) {
 	reqCtx, cancel := context.WithTimeout(ctx.Request.Context(), 5*time.Second)
 	defer cancel()
 
-	items, err := c.service.GetByID(reqCtx, userID)
+	items, err := c.service.GetByUserID(reqCtx, userID)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			helpers.ResponseJson(ctx, http.StatusNotFound, false, "no items", nil)
@@ -76,4 +76,45 @@ func (c *ItemController) Store(ctx *gin.Context) {
 	}
 
 	helpers.ResponseJson(ctx, http.StatusOK, true, "berhasil menyimpan barang baru", nil)
+}
+
+func (c *ItemController) Update(ctx *gin.Context) {
+	var itemReq models.ItemRequest
+	if err := ctx.ShouldBindJSON(&itemReq); err != nil {
+		helpers.ResponseJson(ctx, http.StatusBadRequest, false, "bad request", nil)
+		return
+	}
+
+	itemID := ctx.Param("id")
+
+	reqCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	item := models.Item{
+		Name:        itemReq.Name,
+		Description: itemReq.Description,
+	}
+
+	err := c.service.Update(reqCtx, itemID, &item)
+	if err != nil {
+		helpers.ResponseJson(ctx, http.StatusInternalServerError, false, err.Error(), nil)
+		return
+	}
+
+	helpers.ResponseJson(ctx, http.StatusOK, true, "berhasil update barang", nil)
+}
+
+func (c *ItemController) Delete(ctx *gin.Context) {
+	itemID := ctx.Param("id")
+
+	reqCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	err := c.service.Delete(reqCtx, itemID)
+	if err != nil {
+		helpers.ResponseJson(ctx, http.StatusInternalServerError, false, err.Error(), nil)
+		return
+	}
+
+	helpers.ResponseJson(ctx, http.StatusOK, true, "berhasil hapus barang", nil)
 }

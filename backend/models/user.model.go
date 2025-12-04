@@ -10,6 +10,7 @@ type User struct {
 	Username  string `gorm:"type:varchar(255);uniqueIndex:idx_username" json:"username"`
 	Password  string `json:"-"`
 	Phone     string `gorm:"type:varchar(255);uniqueIndex:idx_phone" json:"phone"`
+	Items     []Item
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

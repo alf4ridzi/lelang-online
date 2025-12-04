@@ -14,6 +14,7 @@ type UserService interface {
 	Login(context.Context, models.Login) (*models.User, error)
 	Register(context.Context, models.User) error
 	Profile(context.Context, any) (*models.User, error)
+	GetItems(context.Context, any) ([]models.Item, error)
 }
 
 type UserServiceImpl struct {
@@ -55,4 +56,8 @@ func (s *UserServiceImpl) Register(ctx context.Context, user models.User) error 
 
 func (s *UserServiceImpl) Profile(ctx context.Context, id any) (*models.User, error) {
 	return s.repo.FindByID(ctx, id)
+}
+
+func (s *UserServiceImpl) GetItems(ctx context.Context, id any) ([]models.Item, error) {
+	return s.repo.GetItems(ctx, id)
 }

@@ -10,7 +10,8 @@ import (
 type UserRepo interface {
 	FindByUsername(context.Context, string) (*models.User, error)
 	FindByID(context.Context, any) (*models.User, error)
-	Create(ctx context.Context, user models.User) error
+	Create(context.Context, models.User) error
+	GetItems(context.Context, any) ([]models.Item, error)
 }
 
 type UserRepoImpl struct {
@@ -35,4 +36,10 @@ func (r *UserRepoImpl) FindByID(ctx context.Context, id any) (*models.User, erro
 	var user models.User
 	err := r.DB.WithContext(ctx).Preload("Role").First(&user, "id = ?", id).Error
 	return &user, err
+}
+
+func (r *UserRepoImpl) GetItems(ctx context.Context, id any) ([]models.Item, error) {
+	var items []models.Item
+	err := r.DB.Where("user_id = ?", id).Order("created_at DESC").Find(&items).Error
+	return items, err
 }

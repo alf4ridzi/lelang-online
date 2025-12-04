@@ -33,7 +33,7 @@ func userRoutes(db *gorm.DB, route *gin.RouterGroup) {
 	{
 		usersGroup := route.Group("users")
 		usersGroup.GET("/profile", userController.Profile)
-		usersGroup.Group("/:id/items", userController.GetItems)
+		usersGroup.GET("/items", userController.GetItems)
 	}
 }
 
@@ -57,7 +57,9 @@ func ItemRoutes(db *gorm.DB, route *gin.RouterGroup) {
 
 	{
 		itemGroup := route.Group("items")
-		itemGroup.POST("/", itemController.Store)
+		itemGroup.POST("", itemController.Store)
 		itemGroup.GET("/:id", itemController.GetByID)
+		itemGroup.PUT("/:id", itemController.Update)
+		itemGroup.DELETE("/:id", itemController.Delete)
 	}
 }
