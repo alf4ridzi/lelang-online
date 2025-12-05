@@ -11,10 +11,10 @@ import (
 )
 
 type UserService interface {
-	Login(context.Context, models.Login) (*models.User, error)
-	Register(context.Context, models.User) error
-	Profile(context.Context, any) (*models.User, error)
-	GetItems(context.Context, any) ([]models.Item, error)
+	Login(ctx context.Context, login models.Login) (*models.User, error)
+	Register(ctx context.Context, user models.User) error
+	Profile(ctx context.Context, id any) (*models.User, error)
+	GetItems(ctx context.Context, id any) ([]models.Item, error)
 }
 
 type UserServiceImpl struct {

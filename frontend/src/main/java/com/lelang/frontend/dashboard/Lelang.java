@@ -40,4 +40,16 @@ public class Lelang {
             return errorResponse;
        }
     }
+    
+    public JSONObject getAuctions() {
+        try {     
+            String response = client.executeRequest("/auctions", "GET", null);
+            return new JSONObject(response);
+        } catch (Exception e) {
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("status", false);
+            errorResponse.put("message", e.getMessage());
+            return errorResponse;
+       }
+    }
 }

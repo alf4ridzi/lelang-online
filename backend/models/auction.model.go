@@ -5,7 +5,7 @@ import (
 )
 
 type Auction struct {
-	ID     uint `gorm:"primaryKey"`
+	ID     uint `gorm:"primaryKey" json:"id"`
 	ItemID int  `json:"item_id" binding:"required"`
 	Item   Item `json:"item"`
 	UserID int
