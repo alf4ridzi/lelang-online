@@ -17,13 +17,10 @@ import org.json.JSONObject;
 public class LoginForm extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginForm.class.getName());
-    
-    private HttpClient client;
     /**
      * Creates new form LoginForm
      */
-    public LoginForm(HttpClient client) {
-        this.client = client;
+    public LoginForm() {
         initComponents();
     }
 
@@ -146,9 +143,9 @@ public class LoginForm extends javax.swing.JFrame {
 
         String password = new String(passwordText.getPassword());
         
-        AuthHandler authClient = new AuthHandler(client);
+        AuthHandler auth = new AuthHandler();
         
-        JSONObject login = authClient.login(username, password);
+        JSONObject login = auth.login(username, password);
 
         if (login.has("status") && login.getBoolean("status")) {
             JOptionPane.showMessageDialog(
@@ -158,7 +155,7 @@ public class LoginForm extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
             );
             
-            Dashboard dashboard = new Dashboard(client);
+            Dashboard dashboard = new Dashboard();
             this.dispose();
             return;
         }
@@ -173,7 +170,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        RegisterForm register = new RegisterForm(client);
+        RegisterForm register = new RegisterForm();
         register.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

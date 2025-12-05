@@ -13,9 +13,7 @@ import com.lelang.frontend.httpclient.HttpClient;
 public class Frontend {
 
     public static void main(String[] args) {
-        HttpClient client = new HttpClient();
-         
-        LoginForm login = new LoginForm(client);
+        LoginForm login = new LoginForm();
         login.setVisible(true);
     }
 }

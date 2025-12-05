@@ -2,8 +2,13 @@
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/Frontend.java
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/LoginForm.java
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/RegisterForm.java
+/Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/Barang.java
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/BarangForm.java
+/Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/BarangPopUp.java
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/Dashboard.java
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/DashboardForm.java
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/DashboardUser.java
+/Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/Lelang.java
+/Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/LelangBarangPopUp.java
+/Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/dashboard/LelangForm.java
 /Users/alfaridzi/dev/lelang-online/frontend/src/main/java/com/lelang/frontend/httpclient/HttpClient.java

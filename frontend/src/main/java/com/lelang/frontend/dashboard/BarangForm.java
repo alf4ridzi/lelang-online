@@ -5,7 +5,11 @@
 package com.lelang.frontend.dashboard;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -16,11 +20,79 @@ public class BarangForm extends javax.swing.JInternalFrame {
     /**
      * Creates new form DashboardUser
      */
+    private Barang barang;
+
     public BarangForm() {
         initComponents();
-        this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
+        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
+
+        this.barang = new Barang();
+
+        loadBarang();
+    }
+
+    public int getSelectedID() {
+
+        int row = tblBarang.getSelectedRow();
+        if (row == -1) {
+            return 0;
+        }
+
+        Object value = tblBarang.getValueAt(row, 0);
+        return Integer.valueOf(value.toString());
+    }
+
+    public String getSelectedName() {
+        int row = tblBarang.getSelectedRow();
+        if (row == -1) {
+            return null;
+        }
+        return tblBarang.getValueAt(row, 1).toString();
+    }
+
+    public String getSelectedDescription() {
+        int row = tblBarang.getSelectedRow();
+        if (row == -1) {
+            return null;
+        }
+        return tblBarang.getValueAt(row, 2).toString();
+    }
+
+    public String getSelectedCreatedAt() {
+        int row = tblBarang.getSelectedRow();
+        if (row == -1) {
+            return null;
+        }
+        return tblBarang.getValueAt(row, 3).toString();
+    }
+
+    public void loadBarang() {
+        JSONObject listBarang = barang.getBarang();
+
+        if (!listBarang.has("status") || !listBarang.getBoolean("status")) {
+            JOptionPane.showMessageDialog(rootPane, "gagal mengambil data : " + listBarang.getString("message"), "gagal", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JSONObject data = listBarang.getJSONObject("data");
+        JSONArray items = data.getJSONArray("items");
+
+        DefaultTableModel model = (DefaultTableModel) tblBarang.getModel();
+
+        model.setRowCount(0);
+
+        for (int i = 0; i < items.length(); i++) {
+            JSONObject item = items.getJSONObject(i);
+            int id = item.getInt("id");
+            String name = item.getString("name");
+            String description = item.getString("description");
+            String createdAt = item.getString("created_at");
+
+            Object[] rowData = {id, name, description, createdAt};
+            model.addRow(rowData);
+        }
     }
 
     /**
@@ -34,14 +106,18 @@ public class BarangForm extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblBarang = new javax.swing.JTable();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
+        jToggleButton3 = new javax.swing.JToggleButton();
+        jToggleButton4 = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(570, 410));
+        setPreferredSize(new java.awt.Dimension(660, 450));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -49,35 +125,87 @@ public class BarangForm extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nama", "Deskripsi", "Di buat"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblBarang);
 
         jToggleButton1.setBackground(new java.awt.Color(255, 255, 255));
         jToggleButton1.setIcon(new javax.swing.ImageIcon("/Users/alfaridzi/dev/lelang-online/frontend/src/main/resources/images/icons8-add-30.png")); // NOI18N
         jToggleButton1.setText("Tambah");
+        jToggleButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
             }
         });
 
+        jToggleButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-edit-30.png"))); // NOI18N
+        jToggleButton2.setText("Edit");
+        jToggleButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
+
+        jToggleButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jToggleButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-cross-30.png"))); // NOI18N
+        jToggleButton3.setText("Hapus");
+        jToggleButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
+
+        jToggleButton4.setBackground(new java.awt.Color(255, 255, 255));
+        jToggleButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-auction-30.png"))); // NOI18N
+        jToggleButton4.setText("Lelang");
+        jToggleButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Hi, How are you feeling today?");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
+                .addComponent(jToggleButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 158, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jToggleButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jToggleButton1)
+                    .addComponent(jToggleButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -98,13 +226,60 @@ public class BarangForm extends javax.swing.JInternalFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
+        
+        
+        BarangPopUp popup = new BarangPopUp(this, false, 0, "", "");
+        popup.setVisible(true);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // TODO add your handling code here:
+        int id = getSelectedID();
+        String name = getSelectedName();
+        String deskripsi = getSelectedDescription();
+
+        BarangPopUp popup = new BarangPopUp(this, true, id, name, deskripsi);
+        popup.setVisible(true);
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        // TODO add your handling code here:
+        int id = getSelectedID();
+
+        int answer = JOptionPane.showConfirmDialog(this, "yakin hapus data?", "confirm", JOptionPane.YES_NO_OPTION);
+        if (answer != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        JSONObject resp = barang.hapusBarang(id);
+        if (resp.has("status") && resp.getBoolean("status")) {
+            JOptionPane.showMessageDialog(rootPane, "berhasil menghapus barang", "berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+            loadBarang();
+            return;
+        }
+
+        JOptionPane.showMessageDialog(rootPane, "gagal hapus barang : " + resp.getString("message"), "gagal", JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+        // TODO add your handling code here:
+        int idBarang = getSelectedID();
+        String namaBarang = getSelectedName();
+        
+        LelangBarangPopUp lelang = new LelangBarangPopUp(idBarang, namaBarang);
+        lelang.setVisible(true);
+    }//GEN-LAST:event_jToggleButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton jToggleButton4;
+    private javax.swing.JTable tblBarang;
     // End of variables declaration//GEN-END:variables
 }

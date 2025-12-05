@@ -34,6 +34,9 @@ public class DashboardForm extends javax.swing.JFrame {
         btnLogout.addActionListener(listener);
     }
     
+    public void addBarangMenuMousePressedListener(ActionListener listener) {
+        
+    }
     public void setUserData(String name, String email, String role) {
         nameText.setText(name);
     }
@@ -57,9 +60,9 @@ public class DashboardForm extends javax.swing.JFrame {
         DashboardMenu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         BarangMenu = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        LelangMenu = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        LelangMenu = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel4 = new javax.swing.JLabel();
@@ -98,7 +101,7 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nameText2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameText1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
                 .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -121,7 +124,7 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 50));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 50));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,68 +147,45 @@ public class DashboardForm extends javax.swing.JFrame {
         DashboardMenu.setLayout(DashboardMenuLayout);
         DashboardMenuLayout.setHorizontalGroup(
             DashboardMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 133, Short.MAX_VALUE)
-            .addGroup(DashboardMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(DashboardMenuLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
         DashboardMenuLayout.setVerticalGroup(
             DashboardMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-            .addGroup(DashboardMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(DashboardMenuLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashboardMenuLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel3.add(DashboardMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 130, 50));
 
         BarangMenu.setBackground(new java.awt.Color(255, 255, 255));
+        BarangMenu.setPreferredSize(new java.awt.Dimension(149, 50));
         BarangMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BarangMenuMouseClicked(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 BarangMenuMousePressed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/alfaridzi/dev/lelang-online/frontend/src/main/resources/images/icons8-box-24.png")); // NOI18N
-        jLabel2.setText("Barang");
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-box-24.png"))); // NOI18N
+        jLabel3.setText("Barang");
 
         javax.swing.GroupLayout BarangMenuLayout = new javax.swing.GroupLayout(BarangMenu);
         BarangMenu.setLayout(BarangMenuLayout);
         BarangMenuLayout.setHorizontalGroup(
             BarangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 133, Short.MAX_VALUE)
-            .addGroup(BarangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(BarangMenuLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(BarangMenuLayout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addContainerGap())
         );
         BarangMenuLayout.setVerticalGroup(
             BarangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-            .addGroup(BarangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(BarangMenuLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
-        jPanel3.add(BarangMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 130, 50));
+        jPanel3.add(BarangMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 130, -1));
 
         LelangMenu.setBackground(new java.awt.Color(255, 255, 255));
         LelangMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -214,28 +194,27 @@ public class DashboardForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel3.setIcon(new javax.swing.ImageIcon("/Users/alfaridzi/dev/lelang-online/frontend/src/main/resources/images/icons8-auction-24.png")); // NOI18N
-        jLabel3.setText("Lelang");
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setIcon(new javax.swing.ImageIcon("/Users/alfaridzi/dev/lelang-online/frontend/src/main/resources/images/icons8-auction-24.png")); // NOI18N
+        jLabel7.setText("Lelang");
 
         javax.swing.GroupLayout LelangMenuLayout = new javax.swing.GroupLayout(LelangMenu);
         LelangMenu.setLayout(LelangMenuLayout);
         LelangMenuLayout.setHorizontalGroup(
             LelangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 137, Short.MAX_VALUE)
+            .addGap(0, 130, Short.MAX_VALUE)
             .addGroup(LelangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LelangMenuLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
         );
         LelangMenuLayout.setVerticalGroup(
             LelangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 50, Short.MAX_VALUE)
             .addGroup(LelangMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(LelangMenuLayout.createSequentialGroup()
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LelangMenuLayout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -244,9 +223,9 @@ public class DashboardForm extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("© 2025. M.Alfaridzi");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 140, -1));
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 140, -1));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 50, 150, 410));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 50, 140, 450));
 
         jDesktopPane1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -272,7 +251,7 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,20 +260,20 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 570, 410));
+        jPanel1.add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 660, 450));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
         );
 
         pack();
@@ -316,33 +295,27 @@ public class DashboardForm extends javax.swing.JFrame {
         jDesktopPane1.add(dash).setVisible(true);
     }//GEN-LAST:event_DashboardMenuMousePressed
 
+    private void LelangMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LelangMenuMousePressed
+        // TODO add your handling code here:
+        DashboardMenu.setBackground(DefaultColor);
+        BarangMenu.setBackground(DefaultColor);
+        LelangMenu.setBackground(ClickedColor);
+       
+       LelangForm lelang = new LelangForm();
+       jDesktopPane1.removeAll();
+       jDesktopPane1.add(lelang).setVisible(true);
+    }//GEN-LAST:event_LelangMenuMousePressed
+
     private void BarangMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BarangMenuMousePressed
         // TODO add your handling code here:
         DashboardMenu.setBackground(DefaultColor);
         BarangMenu.setBackground(ClickedColor);
         LelangMenu.setBackground(DefaultColor);
         
-//        BarangForm barang = new BarangForm();
-//        jDesktopPane1.removeAll();
-//        jDesktopPane1.add(barang).setVisible(true);
+        BarangForm formBarang = new BarangForm();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(formBarang).setVisible(true);
     }//GEN-LAST:event_BarangMenuMousePressed
-
-    private void LelangMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LelangMenuMousePressed
-        // TODO add your handling code here:
-        DashboardMenu.setBackground(DefaultColor);
-        BarangMenu.setBackground(DefaultColor);
-        LelangMenu.setBackground(ClickedColor);
-    }//GEN-LAST:event_LelangMenuMousePressed
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void BarangMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BarangMenuMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_BarangMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -376,11 +349,11 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnLogout;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

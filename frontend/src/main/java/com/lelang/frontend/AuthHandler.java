@@ -15,8 +15,8 @@ public class AuthHandler {
     
     private HttpClient client;
     
-    public AuthHandler(HttpClient client) {
-        this.client = client;
+    public AuthHandler() {
+       this.client = HttpClient.getInstance();
     }
     
     public JSONObject login(String username, String password) {

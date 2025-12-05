@@ -18,12 +18,10 @@ public class RegisterForm extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegisterForm.class.getName());
     
-    private HttpClient client;
     /**
      * Creates new form LoginForm
      */
-    public RegisterForm(HttpClient client) {
-        this.client = client;
+    public RegisterForm() {
         initComponents();
     }
 
@@ -185,7 +183,7 @@ public class RegisterForm extends javax.swing.JFrame {
         String password = new String(passwordText.getPassword());
         String confirmpassword = new String(confirmpasswordText.getPassword());
         
-        AuthHandler authClient = new AuthHandler(client);
+        AuthHandler authClient = new AuthHandler();
         
         JSONObject register = authClient.register(name, username, password, confirmpassword, phone);
 
@@ -210,7 +208,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        LoginForm login = new LoginForm(client);
+        LoginForm login = new LoginForm();
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed

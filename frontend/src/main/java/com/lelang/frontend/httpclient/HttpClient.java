@@ -17,16 +17,26 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class HttpClient {
-
-    private String baseUrl;
+    
+    private static HttpClient instance;
+    
+    public static synchronized HttpClient getInstance() {
+        if (instance == null) {
+            instance = new HttpClient();
+        }
+        
+        return instance;
+    }
+    
+    public String baseUrl;
     private Map<String, String> cookies;
 
-    public HttpClient() {
+    private HttpClient() {
         this.baseUrl = "http://localhost:8080/api";
         this.cookies = new HashMap<>();
     }
 
-    private String executeRequest(String endpoint, String method, JSONObject requestBody) throws IOException {
+    public String executeRequest(String endpoint, String method, JSONObject requestBody) throws IOException {
         URL url = new URL(baseUrl + endpoint);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -171,7 +181,7 @@ public class HttpClient {
     }
 
     public boolean isAuthenticated() {
-        return !cookies.isEmpty();
+        return !cookies.isEmpty() && cookies.containsKey("session_id");
     }
 
     public Map<String, String> getCookies() {

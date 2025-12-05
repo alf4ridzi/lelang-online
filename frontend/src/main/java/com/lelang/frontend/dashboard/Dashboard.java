@@ -16,11 +16,12 @@ import org.json.JSONObject;
 
 public class Dashboard {
 
-    private HttpClient client;
     private DashboardForm form;
-
-    public Dashboard(HttpClient client) {
-        this.client = client;
+    private HttpClient client;
+    
+    public Dashboard() {
+        
+        this.client = HttpClient.getInstance();
         
         this.form = new DashboardForm();
 
@@ -58,7 +59,7 @@ public class Dashboard {
         
         if (logout.has("status") && logout.getBoolean("status")) {
             JOptionPane.showMessageDialog(form, "berhasil logout", "berhasil", JOptionPane.INFORMATION_MESSAGE);
-            LoginForm login = new LoginForm(client);
+            LoginForm login = new LoginForm();
             login.setVisible(true);
             form.dispose();
             return;

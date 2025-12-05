@@ -20,8 +20,8 @@ func SetupRoutes(db *gorm.DB, r *gin.Engine) {
 
 		api.Use(middlewares.AuthMiddleware)
 		userRoutes(db, api)
-
 		ItemRoutes(db, api)
+		AuctionRoutes(db, api)
 	}
 }
 
@@ -61,5 +61,17 @@ func ItemRoutes(db *gorm.DB, route *gin.RouterGroup) {
 		itemGroup.GET("/:id", itemController.GetByID)
 		itemGroup.PUT("/:id", itemController.Update)
 		itemGroup.DELETE("/:id", itemController.Delete)
+	}
+}
+
+func AuctionRoutes(db *gorm.DB, route *gin.RouterGroup) {
+	auctionRepo := repositories.NewAuctionRepo(db)
+	auctionService := services.NewAuctionService(auctionRepo)
+	auctionController := controllers.NewAuctionController(auctionService)
+
+	{
+		auctionGroup := route.Group("auctions")
+		auctionGroup.POST("/new", auctionController.New)
+		auctionGroup.GET("", auctionController.All)
 	}
 }
