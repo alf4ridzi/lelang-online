@@ -6,12 +6,12 @@ import (
 
 type AuctionHistory struct {
 	ID        uint `gorm:"primaryKey"`
-	AuctionID int
-	Auction   Auction
-	ItemID    int
-	Item      Item
-	UserID    int
-	User      User
+	AuctionID uint
+	Auction   Auction `gorm:"foreignKey:AuctionID;references:ID;constraint:OnDelete:CASCADE"`
+	ItemID    uint
+	Item      Item `gorm:"foreignKey:ItemID;references:ID;constraint:OnDelete:CASCADE"`
+	UserID    uint
+	User      User `gorm:"foreignKey:UserID;references:ID;constraint:OnDelete:CASCADE"`
 	Amount    int64
 	CreatedAt time.Time
 	UpdatedAt time.Time

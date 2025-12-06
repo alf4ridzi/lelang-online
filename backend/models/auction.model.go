@@ -6,9 +6,9 @@ import (
 
 type Auction struct {
 	ID     uint `gorm:"primaryKey" json:"id"`
-	ItemID int  `json:"item_id" binding:"required"`
-	Item   Item `json:"item"`
-	UserID int
+	ItemID uint `json:"item_id" binding:"required"`
+	Item   Item `json:"item" gorm:"foreignKey:ItemID;references:ID;constraint:OnDelete:CASCADE"`
+	UserID uint
 	User   User `json:"user"`
 
 	StartTime time.Time `json:"start_time" binding:"required" time_format:"2006-01-02"`
@@ -17,7 +17,7 @@ type Auction struct {
 	FinalPrice  *int64 `json:"final_price"`
 	StartingBid int64  `json:"starting_bid" binding:"required"`
 
-	WinnerID *int
+	WinnerID *uint
 	Winner   *User `json:"winner"`
 
 	CurrentBid int64 `json:"current_bid"`
@@ -29,7 +29,7 @@ type Auction struct {
 }
 
 type AuctionRequest struct {
-	ItemID      int       `json:"item_id" binding:"required"`
+	ItemID      uint      `json:"item_id" binding:"required"`
 	StartTime   time.Time `json:"start_time" binding:"required"`
 	EndTime     time.Time `json:"end_time" binding:"required"`
 	StartingBid int64     `json:"starting_bid" binding:"required"`

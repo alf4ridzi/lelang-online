@@ -4,13 +4,13 @@ import "time"
 
 type User struct {
 	ID        uint   `gorm:"primaryKey" json:"id"`
-	RoleID    int    `json:"-"`
+	RoleID    uint   `json:"-"`
 	Role      Role   `json:"role"`
 	Name      string `json:"name"`
 	Username  string `gorm:"type:varchar(255);uniqueIndex:idx_username" json:"username"`
 	Password  string `json:"-"`
 	Phone     string `gorm:"type:varchar(255);uniqueIndex:idx_phone" json:"phone"`
-	Items     []Item
+	Items     []Item `gorm:"foreignKey:UserID;constraint:OnDelete:CASCADE"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

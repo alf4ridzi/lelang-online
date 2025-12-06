@@ -21,6 +21,7 @@ public class LelangForm extends javax.swing.JInternalFrame {
      * Creates new form LelangForm
      */
     private Lelang lelang;
+    private Lib lib;
     
     public LelangForm() {
         initComponents();
@@ -29,6 +30,7 @@ public class LelangForm extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         
         this.lelang = new Lelang();
+        this.lib = new Lib();
         
         loadLelang();
     }
@@ -67,8 +69,8 @@ public class LelangForm extends javax.swing.JInternalFrame {
             int startBid = auction.getInt("starting_bid");
             int currentBid = auction.getInt("current_bid");
             int countBid = auction.getInt("bid_count");
-            String startTime = auction.getString("start_time");
-            String endTime = auction.getString("end_time");
+            String startTime = lib.timeAgo(auction.getString("start_time"));
+            String endTime = lib.timeAgo(auction.getString("end_time"));
             
             Object[] row = {auctionID, ownerItem, namaItem,
             descItem, startBid, currentBid, countBid, startTime, endTime};

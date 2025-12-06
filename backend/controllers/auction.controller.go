@@ -35,7 +35,7 @@ func (c *AuctionController) New(ctx *gin.Context) {
 	userID := userIDStr.(uint)
 
 	auction := models.Auction{
-		UserID:      int(userID),
+		UserID:      userID,
 		ItemID:      req.ItemID,
 		StartTime:   req.StartTime,
 		EndTime:     req.EndTime,

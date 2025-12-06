@@ -237,7 +237,12 @@ public class BarangForm extends javax.swing.JInternalFrame {
         int id = getSelectedID();
         String name = getSelectedName();
         String deskripsi = getSelectedDescription();
-
+        
+        if (id == -1 || name == "" || deskripsi == "") {
+            JOptionPane.showMessageDialog(this, "tidak ada item yang dipilih", "error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         BarangPopUp popup = new BarangPopUp(this, true, id, name, deskripsi);
         popup.setVisible(true);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
