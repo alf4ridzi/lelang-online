@@ -5,14 +5,12 @@ import (
 	"lelang-online-api/middlewares"
 	"lelang-online-api/repositories"
 	"lelang-online-api/services"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 func SetupRoutes(db *gorm.DB, r *gin.Engine) {
-	r.Use(middlewares.Session(os.Getenv("SECRET_KEY")))
 
 	{
 		api := r.Group("api")
@@ -71,7 +69,8 @@ func AuctionRoutes(db *gorm.DB, route *gin.RouterGroup) {
 
 	{
 		auctionGroup := route.Group("auctions")
-		auctionGroup.POST("/new", auctionController.New)
 		auctionGroup.GET("", auctionController.All)
+		auctionGroup.POST("/new", auctionController.New)
+		auctionGroup.POST("/bid", auctionController.Bid)
 	}
 }

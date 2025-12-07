@@ -6,6 +6,7 @@ import (
 	"lelang-online-api/database"
 	"lelang-online-api/database/migrations"
 	"lelang-online-api/database/seeders"
+	"lelang-online-api/middlewares"
 	"lelang-online-api/routes"
 	"log"
 	"os"
@@ -42,7 +43,7 @@ func main() {
 	Flag(db)
 
 	router := gin.Default()
-
+	router.Use(middlewares.Session(os.Getenv("SECRET_KEY")))
 	routes.SetupRoutes(db, router)
 	router.Run(":8080")
 }

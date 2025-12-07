@@ -23,7 +23,9 @@ type Auction struct {
 	CurrentBid int64 `json:"current_bid"`
 	BidCount   int   `json:"bid_count"`
 
-	Status    int `gorm:"default:1"`
+	Status int `gorm:"default:1"`
+
+	Histories []AuctionHistory `gorm:"foreignKey:AuctionID;constraint:OnDelete:CASCADE"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

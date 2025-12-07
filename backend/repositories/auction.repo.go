@@ -11,6 +11,9 @@ type AuctionRepo interface {
 	ItemExistAuction(ctx context.Context, item *models.Auction) (bool, error)
 	Create(ctx context.Context, item *models.Auction) error
 	All(ctx context.Context) ([]models.Auction, error)
+	ExistAndActivate(ctx context.Context, auctionID uint) (bool, error)
+	Update(ctx context.Context, id uint, auction *models.Auction) error
+	FindByID(ctx context.Context, id uint) (*models.Auction, error)
 }
 
 type AuctionRepoImpl struct {
@@ -37,4 +40,23 @@ func (r *AuctionRepoImpl) ItemExistAuction(ctx context.Context, item *models.Auc
 
 func (r *AuctionRepoImpl) Create(ctx context.Context, item *models.Auction) error {
 	return r.DB.WithContext(ctx).Create(&item).Error
+}
+
+func (r *AuctionRepoImpl) ExistAndActivate(ctx context.Context, auctionID uint) (bool, error) {
+	var count int64
+	err := r.DB.WithContext(ctx).Model(&models.Auction{}).
+		Where("id = ?", auctionID).Where("status = 1").Count(&count).Error
+
+	return count > 0, err
+}
+
+func (r *AuctionRepoImpl) Update(ctx context.Context, id uint, auction *models.Auction) error {
+	err := r.DB.WithContext(ctx).Where("id = ?", id).Updates(auction).Error
+	return err
+}
+
+func (r *AuctionRepoImpl) FindByID(ctx context.Context, id uint) (*models.Auction, error) {
+	var auction models.Auction
+	err := r.DB.WithContext(ctx).Find(&auction, "id = ?", id).Error
+	return &auction, err
 }

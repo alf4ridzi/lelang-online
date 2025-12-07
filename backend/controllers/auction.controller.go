@@ -20,11 +20,21 @@ func NewAuctionController(service services.AuctionService) *AuctionController {
 	return &AuctionController{service: service}
 }
 
-func (c *AuctionController) New(ctx *gin.Context) {
-	var req models.AuctionRequest
+func (c *AuctionController) Bid(ctx *gin.Context) {
+	var req models.BidRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		helpers.ResponseJson(ctx, http.StatusBadRequest, false, err.Error(), nil)
 		return
+	}
+
+	session := sessions.Default(ctx)
+	userID := session.Get("user_id")
+}
+
+func (c *AuctionController) New(ctx *gin.Context) {
+	var req models.AuctionRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+
 	}
 
 	reqCtx, cancel := context.WithTimeout(ctx.Request.Context(), 5*time.Second)
