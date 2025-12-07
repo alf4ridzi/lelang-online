@@ -6,6 +6,7 @@ import (
 	"lelang-online-api/database"
 	"lelang-online-api/database/migrations"
 	"lelang-online-api/database/seeders"
+	"lelang-online-api/handlers"
 	"lelang-online-api/middlewares"
 	"lelang-online-api/routes"
 	"log"
@@ -41,6 +42,8 @@ func main() {
 	}
 
 	Flag(db)
+
+	go handlers.HubInstance.Run()
 
 	router := gin.Default()
 	router.Use(middlewares.Session(os.Getenv("SECRET_KEY")))

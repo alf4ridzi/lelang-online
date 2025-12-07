@@ -67,6 +67,6 @@ func (r *AuctionRepoImpl) UpdateBid(ctx context.Context, id uint, auction *model
 
 func (r *AuctionRepoImpl) FindByID(ctx context.Context, id uint) (*models.Auction, error) {
 	var auction models.Auction
-	err := r.DB.WithContext(ctx).Find(&auction, "id = ?", id).Error
+	err := r.DB.WithContext(ctx).Preload("User").Preload("Item").Find(&auction, "id = ?", id).Error
 	return &auction, err
 }

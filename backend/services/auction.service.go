@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+	"lelang-online-api/handlers"
 	"lelang-online-api/models"
 	"lelang-online-api/repositories"
 
@@ -33,7 +34,19 @@ func (s *AuctionServiceImpl) NewAuction(ctx context.Context, auction *models.Auc
 		return errors.New("item sudah ada di lelang")
 	}
 
-	return s.repo.Create(ctx, auction)
+	err = s.repo.Create(ctx, auction)
+	if err != nil {
+		return err
+	}
+
+	auctionNew, err := s.repo.FindByID(ctx, auction.ID)
+	if err != nil {
+		return err
+	}
+
+	handlers.BroadcastJson(auctionNew)
+
+	return nil
 }
 
 func (s *AuctionServiceImpl) All(ctx context.Context) ([]models.Auction, error) {
@@ -69,5 +82,12 @@ func (s *AuctionServiceImpl) AddBid(ctx context.Context, userID uint, bid *model
 	auction.BidCount = auction.BidCount + 1
 	auction.CurrentBid = bid.Amount
 
-	return s.repo.UpdateBid(ctx, auction.ID, auction, history)
+	err = s.repo.UpdateBid(ctx, auction.ID, auction, history)
+	if err != nil {
+		return err
+	}
+
+	handlers.BroadcastJson(auction)
+
+	return nil
 }

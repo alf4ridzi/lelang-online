@@ -4,6 +4,7 @@
  */
 package com.lelang.frontend.dashboard;
 
+import java.net.URI;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -13,6 +14,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import websockethandler.WsClient;
 
 /**
  *
@@ -26,6 +28,7 @@ public class LelangForm extends javax.swing.JInternalFrame {
     private Lelang lelang;
     private Lib lib;
     private DefaultTableModel LelangTable;
+    WsClient wsClient;
     
     public LelangForm() {
         initComponents();
@@ -36,6 +39,12 @@ public class LelangForm extends javax.swing.JInternalFrame {
         this.lelang = new Lelang();
         this.lib = new Lib();
         this.LelangTable = (DefaultTableModel) auctionTable.getModel();
+        try {
+            wsClient = new WsClient(new URI("ws://localhost:8080/api/ws"), LelangTable);
+            wsClient.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         loadLelang();
     }

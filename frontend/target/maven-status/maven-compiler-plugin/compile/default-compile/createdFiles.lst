@@ -5,6 +5,7 @@ com/lelang/frontend/dashboard/BarangForm$4.class
 com/lelang/frontend/dashboard/Barang.class
 com/lelang/frontend/dashboard/BarangPopUp.class
 com/lelang/frontend/dashboard/DashboardForm.class
+websockethandler/WsClient.class
 com/lelang/frontend/dashboard/BarangForm$1.class
 com/lelang/frontend/dashboard/BarangPopUp$1.class
 com/lelang/frontend/dashboard/BarangForm$3.class

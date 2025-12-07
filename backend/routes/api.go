@@ -2,6 +2,7 @@ package routes
 
 import (
 	"lelang-online-api/controllers"
+	"lelang-online-api/handlers"
 	"lelang-online-api/middlewares"
 	"lelang-online-api/repositories"
 	"lelang-online-api/services"
@@ -15,12 +16,18 @@ func SetupRoutes(db *gorm.DB, r *gin.Engine) {
 	{
 		api := r.Group("api")
 		authRoutes(db, api)
+		websocketRoutes(api)
 
 		api.Use(middlewares.AuthMiddleware)
 		userRoutes(db, api)
 		ItemRoutes(db, api)
 		AuctionRoutes(db, api)
+
 	}
+}
+
+func websocketRoutes(route *gin.RouterGroup) {
+	route.GET("/ws", handlers.HandleWebsocket)
 }
 
 func userRoutes(db *gorm.DB, route *gin.RouterGroup) {
