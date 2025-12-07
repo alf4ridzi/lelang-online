@@ -25,7 +25,7 @@ type Auction struct {
 
 	Status int `gorm:"default:1"`
 
-	Histories []AuctionHistory `gorm:"foreignKey:AuctionID;constraint:OnDelete:CASCADE"`
+	Histories []AuctionHistory `gorm:"foreignKey:AuctionID;constraint:OnDelete:CASCADE" json:"history"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

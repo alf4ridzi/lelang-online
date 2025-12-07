@@ -217,16 +217,16 @@ public class LelangForm extends javax.swing.JInternalFrame {
 
     private void btnBidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBidActionPerformed
         // TODO add your handling code here:
-        int itemID = getSelectedID();
+        int auctionID = getSelectedID();
         String name = getSelectedName();
         String currentBID = getSelectedCurrentBID();
         
-        if (itemID == -1) {
+        if (auctionID == -1) {
             JOptionPane.showMessageDialog(this, "tidak ada item yang dipilih", "gagal", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        LelangPopUp popoup = new LelangPopUp(itemID, name, currentBID);
+        LelangPopUp popoup = new LelangPopUp(auctionID, name, currentBID);
         popoup.setVisible(true);
     }//GEN-LAST:event_btnBidActionPerformed
 

@@ -27,8 +27,20 @@ func (c *AuctionController) Bid(ctx *gin.Context) {
 		return
 	}
 
+	reqCtx, cancel := context.WithTimeout(ctx.Request.Context(), 5*time.Second)
+	defer cancel()
+
 	session := sessions.Default(ctx)
-	userID := session.Get("user_id")
+	val := session.Get("user_id")
+	userID := val.(uint)
+
+	if err := c.service.AddBid(reqCtx, userID, &req); err != nil {
+		helpers.ResponseJson(ctx, http.StatusInternalServerError, false, err.Error(), nil)
+		return
+	}
+
+	helpers.ResponseJson(ctx, http.StatusOK, true, "berhasil membuat bid", nil)
+
 }
 
 func (c *AuctionController) New(ctx *gin.Context) {

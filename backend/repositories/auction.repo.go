@@ -12,7 +12,7 @@ type AuctionRepo interface {
 	Create(ctx context.Context, item *models.Auction) error
 	All(ctx context.Context) ([]models.Auction, error)
 	ExistAndActivate(ctx context.Context, auctionID uint) (bool, error)
-	Update(ctx context.Context, id uint, auction *models.Auction) error
+	UpdateBid(ctx context.Context, id uint, auction *models.Auction, history models.AuctionHistory) error
 	FindByID(ctx context.Context, id uint) (*models.Auction, error)
 }
 
@@ -26,7 +26,7 @@ func NewAuctionRepo(db *gorm.DB) AuctionRepo {
 
 func (r *AuctionRepoImpl) All(ctx context.Context) ([]models.Auction, error) {
 	var auctions []models.Auction
-	err := r.DB.WithContext(ctx).Preload("Item").Preload("User").Find(&auctions).Error
+	err := r.DB.WithContext(ctx).Preload("Item").Preload("User").Preload("Histories").Find(&auctions).Error
 	return auctions, err
 }
 
@@ -50,9 +50,19 @@ func (r *AuctionRepoImpl) ExistAndActivate(ctx context.Context, auctionID uint) 
 	return count > 0, err
 }
 
-func (r *AuctionRepoImpl) Update(ctx context.Context, id uint, auction *models.Auction) error {
-	err := r.DB.WithContext(ctx).Where("id = ?", id).Updates(auction).Error
-	return err
+func (r *AuctionRepoImpl) UpdateBid(ctx context.Context, id uint, auction *models.Auction, history models.AuctionHistory) error {
+	return r.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		err := tx.Model(&models.Auction{}).Where("id = ?", id).Updates(&auction).Error
+		if err != nil {
+			return err
+		}
+
+		if err := tx.Create(&history).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
 }
 
 func (r *AuctionRepoImpl) FindByID(ctx context.Context, id uint) (*models.Auction, error) {

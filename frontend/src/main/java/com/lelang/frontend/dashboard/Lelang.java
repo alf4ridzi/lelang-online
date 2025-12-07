@@ -20,6 +20,23 @@ public class Lelang {
         this.client = HttpClient.getInstance();
     }
     
+    public JSONObject addBid(int auctionID, int bidAmount) {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("auction_id", auctionID);
+        requestBody.put("amount", bidAmount);
+        
+        try {
+            String resp = client.executeRequest("/auctions/bid", "POST", requestBody);
+            return new JSONObject(resp);
+            
+        } catch (Exception e) {
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("status", false);
+            errorResponse.put("message", e.getMessage());
+            return errorResponse;
+        }
+    }
+    
     public JSONObject addAuction(int itemID, Date startTime, Date endTime, int startingBid) {
         String start = startTime.toInstant().toString();
         String end = endTime.toInstant().toString();

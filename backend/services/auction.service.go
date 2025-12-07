@@ -12,6 +12,7 @@ import (
 type AuctionService interface {
 	NewAuction(ctx context.Context, auction *models.Auction) error
 	All(ctx context.Context) ([]models.Auction, error)
+	AddBid(ctx context.Context, userID uint, bid *models.BidRequest) error
 }
 
 type AuctionServiceImpl struct {
@@ -54,7 +55,11 @@ func (s *AuctionServiceImpl) AddBid(ctx context.Context, userID uint, bid *model
 		return err
 	}
 
-	History := models.AuctionHistory{
+	if auction.CurrentBid >= bid.Amount {
+		return errors.New("harga penawaran tidak boleh lebih rendah atau sama dengan daripada harga saat ini")
+	}
+
+	history := models.AuctionHistory{
 		AuctionID: auction.ID,
 		ItemID:    auction.ItemID,
 		UserID:    userID,
@@ -63,7 +68,6 @@ func (s *AuctionServiceImpl) AddBid(ctx context.Context, userID uint, bid *model
 
 	auction.BidCount = auction.BidCount + 1
 	auction.CurrentBid = bid.Amount
-	auction.Histories = append(auction.Histories, History)
 
-	return s.repo.Update(ctx, auction.ID, auction)
+	return s.repo.UpdateBid(ctx, auction.ID, auction, history)
 }

@@ -4,6 +4,9 @@
  */
 package com.lelang.frontend.dashboard;
 
+import javax.swing.JOptionPane;
+import org.json.JSONObject;
+
 /**
  *
  * @author alfaridzi
@@ -11,7 +14,7 @@ package com.lelang.frontend.dashboard;
 public class LelangPopUp extends javax.swing.JFrame {
     
     private String name;
-    private int itemID;
+    private int auctionID;
     private String currentBID;
     private Lelang lelang;
     
@@ -19,9 +22,9 @@ public class LelangPopUp extends javax.swing.JFrame {
      * Creates new form LelangPopUp
      */
     
-    public LelangPopUp(int itemID, String name, String currentBID) {
+    public LelangPopUp(int auctionID, String name, String currentBID) {
         initComponents();
-        this.itemID = itemID;
+        this.auctionID = auctionID;
         this.name = name;
         this.currentBID = currentBID;
         this.lelang = new Lelang();
@@ -187,6 +190,22 @@ public class LelangPopUp extends javax.swing.JFrame {
 
     private void btnBIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBIDActionPerformed
         // TODO add your handling code here:
+        try {
+            String amountStr = bidAmountField.getText();
+            int amount = Integer.parseInt(amountStr);
+            
+            JSONObject resp = lelang.addBid(auctionID, amount);
+            if (resp.has("status") && resp.getBoolean("status")) {
+                JOptionPane.showMessageDialog(this, "berhasil membuat penawaran", "berhasil", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, resp.getString("message"), "error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        
         
     }//GEN-LAST:event_btnBIDActionPerformed
 
