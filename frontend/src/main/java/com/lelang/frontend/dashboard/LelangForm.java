@@ -6,8 +6,11 @@ package com.lelang.frontend.dashboard;
 
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,6 +25,7 @@ public class LelangForm extends javax.swing.JInternalFrame {
      */
     private Lelang lelang;
     private Lib lib;
+    private DefaultTableModel LelangTable;
     
     public LelangForm() {
         initComponents();
@@ -31,8 +35,39 @@ public class LelangForm extends javax.swing.JInternalFrame {
         
         this.lelang = new Lelang();
         this.lib = new Lib();
+        this.LelangTable = (DefaultTableModel) auctionTable.getModel();
         
         loadLelang();
+    }
+    
+    private int getSelectedID() {
+        int row = auctionTable.getSelectedRow();
+        if (row == -1) {
+            return -1;
+        }
+        
+        Object value = auctionTable.getValueAt(row, 0);
+        return Integer.valueOf(value.toString());
+    }
+    
+    private String getSelectedName() {
+        int row = auctionTable.getSelectedRow();
+        if (row == -1) {
+            return "";
+        }
+        
+        Object value = auctionTable.getValueAt(row, 2);
+        return String.valueOf(value.toString());
+    }
+    
+    private String getSelectedCurrentBID() {
+        int row = auctionTable.getSelectedRow();
+        if (row == -1) {
+            return "";
+        }
+        
+        Object value = auctionTable.getValueAt(row, 5);
+        return String.valueOf(value.toString());
     }
     
     private void loadLelang() {
@@ -50,8 +85,7 @@ public class LelangForm extends javax.swing.JInternalFrame {
             return;
         }
         
-        DefaultTableModel model = (DefaultTableModel) auctionTable.getModel();
-        model.setRowCount(0);
+        LelangTable.setRowCount(0);
         
         JSONObject data = resp.getJSONObject("data");
         JSONArray auctions = data.getJSONArray("auctions");
@@ -75,7 +109,7 @@ public class LelangForm extends javax.swing.JInternalFrame {
             Object[] row = {auctionID, ownerItem, namaItem,
             descItem, startBid, currentBid, countBid, startTime, endTime};
             
-            model.addRow(row);
+            LelangTable.addRow(row);
         }
         
     }
@@ -92,8 +126,9 @@ public class LelangForm extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         auctionTable = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        searchText = new javax.swing.JTextField();
         jToggleButton1 = new javax.swing.JToggleButton();
+        btnBid = new javax.swing.JToggleButton();
 
         setPreferredSize(new java.awt.Dimension(660, 450));
 
@@ -111,6 +146,19 @@ public class LelangForm extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(auctionTable);
 
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-search-24.png"))); // NOI18N
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        btnBid.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-auction-24.png"))); // NOI18N
+        btnBid.setText("Tambah BID");
+        btnBid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBidActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,24 +166,24 @@ public class LelangForm extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)))
+                .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBid)
+                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(155, Short.MAX_VALUE)
+                .addContainerGap(108, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(searchText)
+                    .addComponent(btnBid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(7, 7, 7)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,12 +200,43 @@ public class LelangForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        String keyword = searchText.getText();
+        
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(LelangTable);
+        auctionTable.setRowSorter(sorter);
+        
+        if (keyword.trim().length() == 0) {
+           sorter.setRowFilter(null);
+           return;
+        }
+        
+        sorter.setRowFilter(RowFilter.regexFilter("(!?)" + keyword));
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void btnBidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBidActionPerformed
+        // TODO add your handling code here:
+        int itemID = getSelectedID();
+        String name = getSelectedName();
+        String currentBID = getSelectedCurrentBID();
+        
+        if (itemID == -1) {
+            JOptionPane.showMessageDialog(this, "tidak ada item yang dipilih", "gagal", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        LelangPopUp popoup = new LelangPopUp(itemID, name, currentBID);
+        popoup.setVisible(true);
+    }//GEN-LAST:event_btnBidActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable auctionTable;
+    private javax.swing.JToggleButton btnBid;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextField searchText;
     // End of variables declaration//GEN-END:variables
 }
